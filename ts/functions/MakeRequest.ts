@@ -1,5 +1,5 @@
 import * as ssh from 'ssh2';
-import * as fs from 'fs';
+// import * as fs from 'fs';
 
 export default function MakeRequest (ipAdd: string){
   return new Promise<string>((resolve, reject) => {
@@ -8,7 +8,7 @@ export default function MakeRequest (ipAdd: string){
     const password = 'gns3server';
     const root_password = 'gns3server';
     const ip_router = ipAdd;
-    const outputFilePath = `../catalogs/arp/${ip_router}-arp.json`;
+    // const outputFilePath = `../catalogs/arp/${ip_router}-arp.json`;
     let jsonValue = "";
 
     const client = new ssh.Client();

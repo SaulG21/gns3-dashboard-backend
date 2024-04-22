@@ -90,10 +90,10 @@ export const arpTable = {
     }
   };
 
-export interface RouterARPInterface {
+export interface ArpInterface {
   // "Cisco-IOS-XE-arp-oper:arp-data": {
-    "arp-vrf": [
-      {
+    // "arp-vrf": [
+    //   {
         "vrf": string,
         "arp-oper": [
           {
@@ -178,6 +178,6 @@ export interface RouterARPInterface {
           }
         ]
       }
-    ]
+    // ]
   // }
-};
+// };

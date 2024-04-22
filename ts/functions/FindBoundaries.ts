@@ -12,8 +12,8 @@ export interface DataArpPops{
     time: string;
 };
 
-const hostName = routerInfo["Cisco-IOS-XE-native:native"].hostname;
-const dataArp = arpTable["Cisco-IOS-XE-arp-oper:arp-data"]["arp-vrf"][0]["arp-oper"];
+// const hostName = routerInfo["Cisco-IOS-XE-native:native"].hostname;
+// const dataArp = arpTable["Cisco-IOS-XE-arp-oper:arp-data"]["arp-vrf"][0]["arp-oper"];
 
 // console.log(dataArp);
 
@@ -45,5 +45,5 @@ export const filterAddresses = function (arpData: DataArpPops[]) {
     return uniqueEntries;
 };
 
-export const uniqueMAC = filterAddresses(dataArp);
-console.log(`the ${hostName}'s neighbors are: `, uniqueMAC);
+// export const uniqueMAC = filterAddresses(dataArp);
+// console.log(`the ${hostName}'s neighbors are: `, uniqueMAC);
