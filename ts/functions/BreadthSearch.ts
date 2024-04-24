@@ -36,7 +36,8 @@ const breadthSearch = async function (ipAddress: string) {
       topology[ipAddress]=neighbor;
       visited.add(nodeToVisit);
       neighbor.map((address:string)=>{
-        toVisit.add(address);
+        // toVisit.add(address);
+        breadthSearch(address);
       });
       toVisit.delete(nodeToVisit);
       return tableArp;
