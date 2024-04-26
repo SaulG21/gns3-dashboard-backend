@@ -1,6 +1,8 @@
 var SSH2Shell = require('ssh2shell');
 import { filterAddresses } from "../functions/FindBoundaries";
 
+let tableArp:any;
+
 var host = {
     server: {
         host: "172.30.3.129",
@@ -12,21 +14,14 @@ var host = {
 
 let SSH = new SSH2Shell(host);
 
-function getOutputSSH(commandList: string) {
+function getOutputSSH(ipAddress: string) {
     return new Promise((resolve, reject) => {
-        host.commands = [commandList];
+        host.commands = [`sudo curl --interface virbr0 https://${ipAddress}/restconf/data/Cisco-IOS-XE-arp-oper:arp-data/ -k -u "admin:admin" -H "Accept: application/yang-data+json"`];
         const ssh = new SSH2Shell(host);
-        var jsonOutput = ''
-        const jsonPattern = /\{(?:[^{}]|(?:\{[^{}]*\}))*\}/g;
         ssh.connect((data: any, err: any) => {
             if (err) {
                 reject(err);
             } else {
-                const matches = data.toString().match(jsonPattern);
-                if (matches) {
-                    jsonOutput = matches.join('');
-                    console.log(jsonOutput)
-                }
                 resolve(data);/*  */
             }
         });
@@ -45,17 +40,17 @@ const breadthSearch = async function (ipAddress: string) {
 
     toVisit.add(ipAddress);
 
-    const processNode = async (nodeToVisit: string) => {
-        let tableArp: any;
-        await getOutputSSH(nodeToVisit)
-            .then(jsonValue => {
-                if (jsonValue) {
-                    tableArp = JSON.parse(jsonValue);
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+    for await (const item of Array.from(toVisit)) {
+        console.log(item);
+        var value:any = await getOutputSSH(item);
+        var jsonOutput = ''
+        const jsonPattern = /\{(?:[^{}]|(?:\{[^{}]*\}))*\}/g;
+        const matches = value.match(jsonPattern);
+        if (matches) {
+            jsonOutput = matches.join('');
+            // console.log(JSON.parse(jsonOutput));
+            tableArp = JSON.parse(jsonOutput);
+        };
         if (tableArp != undefined) {
             let list = filterAddresses(tableArp['arp-oper']);
             let neighbor: string[] = [];
@@ -64,18 +59,17 @@ const breadthSearch = async function (ipAddress: string) {
             })
             // console.log(`neighbors of ${ipAddress}: `, neighbor);
             topology[ipAddress] = neighbor;
-            visited.add(nodeToVisit);
+            visited.add(item);
             neighbor.map((address: string) => {
                 // toVisit.add(address);
                 breadthSearch(address);
             });
-            toVisit.delete(nodeToVisit);
-            return tableArp;
+            toVisit.delete(item);
         }
-
     };
 
-    await Promise.all(Array.from(toVisit).map(processNode));
+
+
     // console.log("nodes visited: ");
     // for (const nodeVisited of visited) {
     //   console.log(nodeVisited);

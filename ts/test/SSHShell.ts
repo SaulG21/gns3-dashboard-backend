@@ -35,7 +35,6 @@ const getOutput = async () => {
     for await (const item of commands) {
         console.log(item);
         value = await getOutputSSH(item);
-        // console.log(value);
         var jsonOutput = ''
         const jsonPattern = /\{(?:[^{}]|(?:\{[^{}]*\}))*\}/g;
         const matches = value.match(jsonPattern);
