@@ -40,7 +40,7 @@ const discoverTopology = async (startNode: string): Promise<Topology> => {
         const visited: Set<string> = new Set();
         const queue: string[] = [];
     
-        console.log(startNode);
+        // console.log(startNode);
         queue.push(startNode);
         visited.add(startNode);
     
@@ -49,9 +49,9 @@ const discoverTopology = async (startNode: string): Promise<Topology> => {
     
             const neighbors = await getNeighbors(currentNode);
             if (neighbors.length > 0){
-                console.log(neighbors);
+                // console.log(neighbors);
                 topology[currentNode] = neighbors;
-                console.log(topology)
+                // console.log(topology)
                 for (const neighbor of neighbors) {
                     if (!visited.has(neighbor)) {
                         visited.add(neighbor);
@@ -79,10 +79,11 @@ const getNeighbors = async (node: string): Promise<string[]> => {
         list.forEach((item) => {
             neighbor.push(item.address);
         });
-        // (Implementation details omitted for brevity)
         return neighbor;
     };
     return [];
 };
 
-discoverTopology("192.168.122.21")
+discoverTopology("192.168.122.21").then(data=>{
+    console.log(data);
+});
