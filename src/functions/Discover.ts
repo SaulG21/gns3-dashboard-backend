@@ -34,7 +34,7 @@ interface Topology {
 //     return topology;
 // };
 
-const discoverTopology = async (startNode: string): Promise<Topology> => {
+export const discoverTopology = async (startNode: string): Promise<Topology> => {
     return new Promise(async(resolve, reject)=>{
         const topology: Topology = {};
         const visited: Set<string> = new Set();
@@ -64,7 +64,7 @@ const discoverTopology = async (startNode: string): Promise<Topology> => {
     })
 };
 
-const getNeighbors = async (node: string): Promise<string[]> => {
+export const getNeighbors = async (node: string): Promise<string[]> => {
     // Send a request (e.g., ARP request) to the given node
     const jsonValue = await makeRequest(node);
     // console.log(await makeRequest(node));
@@ -84,6 +84,6 @@ const getNeighbors = async (node: string): Promise<string[]> => {
     return [];
 };
 
-discoverTopology("192.168.122.21").then(data=>{
-    console.log(data);
-});
+// discoverTopology("192.168.122.21").then(data=>{
+//     console.log(data);
+// });

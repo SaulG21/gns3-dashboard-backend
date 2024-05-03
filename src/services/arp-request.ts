@@ -18,7 +18,7 @@ export async function makeRequest(ipAddress:string){
     client.on('end', () => {
       resolve(responseData);
       // console.log(responseData);
-      console.log('Connection closed');
+      // console.log('Connection closed');
     });
 
     client.on('error', (err) => {
