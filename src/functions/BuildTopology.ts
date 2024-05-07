@@ -81,8 +81,8 @@ export const BuildTopology = async function () {
         };
       }
     }
-  
-    console.log(routers);
+    return routers;
+    // console.log(routers);
   };
 
 BuildTopology();
