@@ -34,11 +34,12 @@ interface Topology {
 //     return topology;
 // };
 
-export const discoverTopology = async (startNode: string): Promise<Topology> => {
+export const discoverTopology = async (startNode: string): Promise<[Topology, Set<ArpInterface>]> => {
     return new Promise(async(resolve, reject)=>{
         const topology: Topology = {};
         const visited: Set<string> = new Set();
         const queue: string[] = [];
+        const arpTablesSet: Set<ArpInterface> = new Set();
     
         // console.log(startNode);
         queue.push(startNode);
@@ -47,7 +48,7 @@ export const discoverTopology = async (startNode: string): Promise<Topology> => 
         while (queue.length > 0) {
             const currentNode = queue.shift()!;
     
-            const [neighbors, table] = await getNeighbors(currentNode);
+            const [neighbors, arpTableCurrentNode] = await getNeighbors(currentNode);
             if (neighbors.length > 0){
                 // console.log(neighbors);
                 topology[currentNode] = neighbors;
@@ -56,14 +57,18 @@ export const discoverTopology = async (startNode: string): Promise<Topology> => 
                     if (!visited.has(neighbor)) {
                         visited.add(neighbor);
                         // funa al router de mi compañero jorge xd
-                        if (neighbor != '192.168.122.202'){
+                        if (neighbor != '192.168.122.202' && neighbor != "1.1.1.1"){
                             queue.push(neighbor);
+                            if (arpTableCurrentNode){
+                                arpTablesSet.add(arpTableCurrentNode);
+                            }
                         }
                     }
                 }
             }
         }
-        resolve(topology);
+        // console.log(arpTablesSet);
+        resolve([topology, arpTablesSet]);
     })
 };
 

@@ -11,9 +11,9 @@ const PORT = process.env.PORT || 4000;
 app.get("/", (req, res) => res.send("Hello from server! jajsjs"));
 
 app.get("/functions/build-topology", async (req, res) =>{
-    const value = await BuildTopology();
-    
-    res.send(value);
+    const data = await BuildTopology();
+    console.log(data);
+    res.send(data);
 });
 
 app.listen(PORT, () => console.log(`⚡Server is running here 👉 https://localhost:${PORT}`));
