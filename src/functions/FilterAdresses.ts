@@ -1,6 +1,3 @@
-import { arpTable } from "../catalogs/arp/arp.catalog"
-import { routerInfo } from "../catalogs/interfaces/interfaces.catalog"
-
 export interface DataArpPops{
     address: string;
     enctype: string;
@@ -12,11 +9,6 @@ export interface DataArpPops{
     time: string;
 };
 
-// const hostName = routerInfo["Cisco-IOS-XE-native:native"].hostname;
-// const dataArp = arpTable["Cisco-IOS-XE-arp-oper:arp-data"]["arp-vrf"][0]["arp-oper"];
-
-// console.log(dataArp);
-
 export const filterAddresses = function (arpData: DataArpPops[]) {
 
     const frequencyMap: Record<string, number> = {};
@@ -24,7 +16,6 @@ export const filterAddresses = function (arpData: DataArpPops[]) {
         const key = entry.hardware.slice(0,8);
         frequencyMap[key] = (frequencyMap[key] || 0) + 1;
     });
-
 
     let mostFrequentCount = 0;
     let mostFrequentAddress: string | null = null;
@@ -44,6 +35,3 @@ export const filterAddresses = function (arpData: DataArpPops[]) {
 
     return uniqueEntries;
 };
-
-// export const uniqueMAC = filterAddresses(dataArp);
-// console.log(`the ${hostName}'s neighbors are: `, uniqueMAC);

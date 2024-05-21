@@ -17,7 +17,6 @@ export async function makeRequest(ipAddress:string){
 
     client.on('end', () => {
       resolve(responseData);
-      // console.log(responseData);
       // console.log('Connection closed');
     });
 
@@ -40,5 +39,3 @@ export const parseDataToARP = function (data:string) {
       error: "An error has been ocurred with data:string"
     }
 };
-
-makeRequest("1.1.1.1");
