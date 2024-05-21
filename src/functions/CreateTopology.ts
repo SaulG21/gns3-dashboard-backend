@@ -1,6 +1,6 @@
 import { breadthFirstSearch } from "./BreadthFisrtSearch";
 
-export const BuildTopology = async function () {
+export const createTopology = async function () {
     let routers: Record<string, any> = {};
     // Discovers all routers in the network conected.
     let [data, arpRoutersSet]: any = await breadthFirstSearch("192.168.122.21");

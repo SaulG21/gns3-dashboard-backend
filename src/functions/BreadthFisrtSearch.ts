@@ -5,7 +5,6 @@ interface Topology {
     [node: string]: string[];
 }
 
-// Breadth Fisrt Search function.
 export const breadthFirstSearch = async (startNode: string): Promise<[Topology, Set<ArpInterface>]> => {
     return new Promise(async(resolve, reject)=>{
         const topology: Topology = {};
