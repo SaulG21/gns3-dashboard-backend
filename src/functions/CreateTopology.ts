@@ -1,4 +1,4 @@
-import { breadthFirstSearch } from "./BreadthFisrtSearch";
+import { breadthFirstSearch } from "./BreadthFirstSearch";
 
 export const createTopology = async function () {
     let routers: Record<string, any> = {};
