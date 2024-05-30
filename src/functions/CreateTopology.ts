@@ -1,3 +1,4 @@
+//here it imports the BFS implementation.
 import { breadthFirstSearch } from "./BreadthFirstSearch";
 
 export const createTopology = async function () {
@@ -21,6 +22,7 @@ export const createTopology = async function () {
         }
       }
   
+      // if the router is not found it creates a new router item.
       if (!routerFound) {
         routers[`Router${routerList.length + 1}`] = {
           interfaces: [key],
@@ -28,5 +30,6 @@ export const createTopology = async function () {
         };
       }
     }
+    // It returns an array with all edges and all arp-tables.
     return [routers, Array.from(arpRoutersSet)];
   };
